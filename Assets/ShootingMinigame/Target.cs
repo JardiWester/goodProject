@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Target : MonoBehaviour
 {
@@ -6,6 +8,7 @@ public class Target : MonoBehaviour
     public float healt = 10f;
     public float defaultHealt;
 
+    public GameObject AsteroidDestroyer;
     public float moveSpeed = 5f; 
     public bool moveForward = true; 
 
@@ -47,6 +50,15 @@ public class Target : MonoBehaviour
         }
 
         Debug.Log("Target dead");
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Despawn"))
+        {
+            Respawn();
+        }
     }
 
     void Respawn()
