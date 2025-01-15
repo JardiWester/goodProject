@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Target : MonoBehaviour
 {
@@ -9,11 +6,21 @@ public class Target : MonoBehaviour
     public float healt = 10f;
     public float defaultHealt;
 
+    public float moveSpeed = 5f; 
+    public bool moveForward = true; 
+
     private void Start()
     {
         defaultHealt = healt;
-        gameObject.transform.position = new Vector3(Random.Range(370,415), Random.Range(380,385), Random.Range(1,20));
+
+        gameObject.transform.position = new Vector3(Random.Range(10, -15), Random.Range(5, -5), Random.Range(30, 40));
         transform.rotation = Random.rotation;
+    }
+
+    private void Update()
+    {
+        float direction = moveForward ? 1f : -1f; // Forward (1) or backward (-1)
+        transform.position += new Vector3(0, 0, direction) * moveSpeed * Time.deltaTime;
     }
 
     public void TakeDamage(float amount)
@@ -27,16 +34,29 @@ public class Target : MonoBehaviour
 
     void Die()
     {
-        if (isTargetPractice == true)
+        if (isTargetPractice)
         {
             healt = defaultHealt;
-            gameObject.transform.position = new Vector3(Random.Range(370,415), Random.Range(380,385), Random.Range(1,20));
-            gameObject.transform.rotation = Random.rotation;
+
+            
+            Respawn();
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject); 
         }
-        //Debug.Log("target dead");
+
+        Debug.Log("Target dead");
+    }
+
+    void Respawn()
+    {
+        Vector3 newPosition = new Vector3(Random.Range(10, -15), Random.Range(5, -5), Random.Range(50, 90));
+        
+        transform.position = newPosition;
+
+        transform.rotation = Random.rotation;
+
+        moveForward = Random.value > 0.5f; 
     }
 }
