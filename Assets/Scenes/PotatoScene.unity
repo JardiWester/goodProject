@@ -384,7 +384,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 737760488998223758, guid: ff3a674f6ffa2a349a9317b419056f16, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2456400528897448166, guid: ff3a674f6ffa2a349a9317b419056f16, type: 3}
       propertyPath: m_LocalPosition.z
@@ -406,6 +406,22 @@ PrefabInstance:
       propertyPath: targets.Array.data[0]
       value: 
       objectReference: {fileID: 372212646}
+    - target: {fileID: 2903126381867658770, guid: ff3a674f6ffa2a349a9317b419056f16, type: 3}
+      propertyPath: hapticPattern.ManualPattern.Pulses.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2903126381867658770, guid: ff3a674f6ffa2a349a9317b419056f16, type: 3}
+      propertyPath: hapticPattern.ManualPattern.Pulses.Array.data[0].ManualID.duration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2903126381867658770, guid: ff3a674f6ffa2a349a9317b419056f16, type: 3}
+      propertyPath: hapticPattern.ManualPattern.Pulses.Array.data[0].ManualID.IntensityL
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2903126381867658770, guid: ff3a674f6ffa2a349a9317b419056f16, type: 3}
+      propertyPath: hapticPattern.ManualPattern.Pulses.Array.data[0].ManualID.IntensityR
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3338565814721416815, guid: ff3a674f6ffa2a349a9317b419056f16, type: 3}
       propertyPath: m_LocalScale.z
       value: 100
@@ -416,7 +432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3644080868903698197, guid: ff3a674f6ffa2a349a9317b419056f16, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5410653799726005894, guid: ff3a674f6ffa2a349a9317b419056f16, type: 3}
       propertyPath: m_LocalPosition.x

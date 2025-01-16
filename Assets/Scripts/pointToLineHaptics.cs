@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.XR;
 using UnityEditor;
 
-public class pointToLineHaptics : MonoBehaviour
+public class pointToLineHaptics : hapticsPlayerParent
 {
     [Header("Target Settings")]
     [SerializeField] List<Transform> targets;
@@ -20,6 +20,8 @@ public class pointToLineHaptics : MonoBehaviour
     public float hapticDuration = 0.1f;
     [SerializeField] float intensityDiv = 10;
     [SerializeField] bool invertHaptics = false;
+
+    [SerializeField] protected hapticPattern confirmPatern;
 
 
 
@@ -52,10 +54,13 @@ public class pointToLineHaptics : MonoBehaviour
 
         float intensity = Mathf.Lerp(minIntensity, maxIntensity, distance);
         ApplyHapticFeedback(intensity);
+        //Debug.Log(intensity);
     }
 
     private void ApplyHapticFeedback(float intensity)
     {
+        hapticPattern paternToPlay = hapticPattern;
+
         if (invertHaptics)
         {
             intensity = 1 - intensity;
@@ -63,10 +68,38 @@ public class pointToLineHaptics : MonoBehaviour
         if (intensity < 0)
         {
             intensity = 0;
-        }else if (intensity > 1)
+        }
+        
+        if (intensity > 1)
         {
             intensity = 1;
+            if (Physics.Raycast(transform.position, transform.forward, out var hit, 1000) && hit.transform.GetComponent<Target>())
+            {
+                //Debug.Log("hit");
+                if (!givingFeedback)
+                {
+                    playPattern(confirmPatern);
+                }
+            } else
+            {
+                //if (!givingFeedback)
+                //{
+                    //hapticPattern.manualPattern.pulses[0].manualID.duration = 1 - intensity;
+                    playPattern(hapticPattern, intensity);
+                //}
+            }
         }
+        else
+        {
+            //if (!givingFeedback)
+            //{
+                //hapticPattern.manualPattern.pulses[0].manualID.duration = 1 - intensity;
+                playPattern(hapticPattern, intensity);
+            //}
+        }
+
+
+
         
 
         //Debug.Log(intensity);
@@ -75,7 +108,7 @@ public class pointToLineHaptics : MonoBehaviour
 
         if (hapticDevice.isValid)
         {
-            SendHapticImpulse(hapticDevice, intensity, hapticDuration);
+            //SendHapticImpulse(hapticDevice, intensity, hapticDuration);
         }
     }
     private void SendHapticImpulse(InputDevice device, float amplitude, float duration)

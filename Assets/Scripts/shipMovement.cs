@@ -42,7 +42,7 @@ public class shipMovement : MonoBehaviour
                 xRotation -= 360f;
 
             // Clamp the rotations to -maxHeadsetRotation to maxHeadsetRotation
-            float clampedZRotation = Mathf.Clamp(zRotation, -maxHeadsetRotation, maxHeadsetRotation);
+            float clampedZRotation = Mathf.Clamp(-zRotation, -maxHeadsetRotation, maxHeadsetRotation);
             float clampedXRotation = Mathf.Clamp(-xRotation, -maxHeadsetRotation, maxHeadsetRotation);
 
             //Debug.Log(clampedXRotation + " " + clampedZRotation);

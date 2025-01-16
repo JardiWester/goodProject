@@ -10,7 +10,6 @@ public class GunShoot : MonoBehaviour
    public float range = 1000f;
    public float firingRate = 15f;
 
-   public Transform fpsCam;
    private float nextTimeToFire = 0f;
 
     [SerializeField] private InputActionReference shootAction;
@@ -24,11 +23,6 @@ public class GunShoot : MonoBehaviour
     }
 
 
-
-    private void Start()
-    {
-        fpsCam = transform;
-    }
 
     private void Update()
    {
@@ -45,7 +39,7 @@ public class GunShoot : MonoBehaviour
 
    void Shoot()
    {
-      if (Physics.Raycast(fpsCam.position, fpsCam.forward, out var hit, range))
+      if (Physics.Raycast(transform.position, transform.forward, out var hit, range))
       {
          //Debug.Log(hit.transform.name);
          

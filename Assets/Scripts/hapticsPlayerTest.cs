@@ -9,13 +9,7 @@ public class hapticsPlayerTest : hapticsPlayerParent
     protected override void Start()
     {
         base.Start();
-        //playPattern();
-        
+        playPattern();
     }
-    private void Update()
-    {
-        var rController = HapticsUtility.Controller.Right;
-
-        HapticsUtility.SendHapticImpulse(1, 10, rController, 1);
-    }
+    
 }

@@ -51,7 +51,7 @@ public class manualIFD
     [SerializeField] private float IntensityR;
     [SerializeField] private float FrequencyR;
     [Space(15)]
-    [SerializeField] private float Duration;
+    [SerializeField] public float duration;
 
     
 
@@ -59,7 +59,7 @@ public class manualIFD
     public float frequencyL { get => FrequencyL; }
     public float intensityR { get => IntensityR; }
     public float frequencyR { get => FrequencyR; }
-    public float duration { get => Duration; }
+    //public float duration { get => Duration; }
 }
 
 public class hapticsPlayerParent : MonoBehaviour
@@ -165,7 +165,7 @@ public class hapticsPlayerParent : MonoBehaviour
 
             //Gamepad.current.SetMotorSpeeds(pulse.manualID.intensityL * intensityMultiplier, pulse.manualID.intensityR * intensityMultiplier);
 
-            Debug.Log("guuuuuuuuuh");
+            //Debug.Log("guuuuuuuuuh");
 
             //OVRInput.SetControllerVibration(pulse.manualID.frequencyL, pulse.manualID.intensityL, OVRInput.Controller.LTouch);
             //OVRInput.SetControllerVibration(pulse.manualID.frequencyR, pulse.manualID.intensityR, OVRInput.Controller.RTouch);
@@ -179,6 +179,8 @@ public class hapticsPlayerParent : MonoBehaviour
             yield return new WaitForSeconds(pulse.delay);
         }
         givingFeedback = false;
+
+
 
         //debug stuff:
         //playPattern();

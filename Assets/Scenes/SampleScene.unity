@@ -2108,7 +2108,21 @@ MonoBehaviour:
           FrequencyL: 0.5
           IntensityR: 1
           FrequencyR: 0.5
-          Duration: 0.5
+          duration: 0
+        Delay: 0.2
+      - ManualID:
+          IntensityL: 1
+          FrequencyL: 0.5
+          IntensityR: 1
+          FrequencyR: 0.5
+          duration: 0
+        Delay: 0.2
+      - ManualID:
+          IntensityL: 1
+          FrequencyL: 0.5
+          IntensityR: 1
+          FrequencyR: 0.5
+          duration: 0
         Delay: 0.2
   givingFeedback: 0
   stopHapticPattern:
@@ -2119,14 +2133,14 @@ MonoBehaviour:
           FrequencyL: 0.5
           IntensityR: 1
           FrequencyR: 0.5
-          Duration: 0.5
+          duration: 0
         Delay: 0.2
       - ManualID:
           IntensityL: 1
           FrequencyL: 0.5
           IntensityR: 1
           FrequencyR: 0.5
-          Duration: 0.5
+          duration: 0
         Delay: 0
   changed: 0
 --- !u!1 &456005170
@@ -2477,28 +2491,28 @@ MonoBehaviour:
           FrequencyL: 1
           IntensityR: 1
           FrequencyR: 1
-          Duration: 0.1
+          duration: 0
         Delay: 0.1
       - ManualID:
           IntensityL: 1
           FrequencyL: 1
           IntensityR: 1
           FrequencyR: 1
-          Duration: 0.3
+          duration: 0
         Delay: 0.3
       - ManualID:
           IntensityL: 1
           FrequencyL: 1
           IntensityR: 1
           FrequencyR: 1
-          Duration: 0.1
+          duration: 0
         Delay: 0.1
       - ManualID:
           IntensityL: 1
           FrequencyL: 1
           IntensityR: 1
           FrequencyR: 1
-          Duration: 0.3
+          duration: 0
         Delay: 0.3
   givingFeedback: 0
 --- !u!1 &832575517
@@ -3874,14 +3888,14 @@ MonoBehaviour:
           FrequencyL: 0
           IntensityR: 1
           FrequencyR: 0
-          Duration: 0.5
+          duration: 0
         Delay: 0.2
       - ManualID:
           IntensityL: 1
           FrequencyL: 0
           IntensityR: 1
           FrequencyR: 0
-          Duration: 0.5
+          duration: 0
         Delay: 0
   givingFeedback: 0
   falseHapticPattern:
@@ -3892,7 +3906,7 @@ MonoBehaviour:
           FrequencyL: 0
           IntensityR: 1
           FrequencyR: 0
-          Duration: 1
+          duration: 0
         Delay: 0
 --- !u!1 &1295583569
 GameObject:
@@ -4595,7 +4609,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hapticPattern:
     ManualPattern:
-      Pulses: []
+      Pulses:
+      - ManualID:
+          IntensityL: 1
+          FrequencyL: 0
+          IntensityR: 1
+          FrequencyR: 1
+          duration: 0
+        Delay: 1
+      - ManualID:
+          IntensityL: 1
+          FrequencyL: 1
+          IntensityR: 1
+          FrequencyR: 0
+          duration: 0
+        Delay: 1
+      - ManualID:
+          IntensityL: 1
+          FrequencyL: 0
+          IntensityR: 1
+          FrequencyR: 1
+          duration: 0
+        Delay: 1
+      - ManualID:
+          IntensityL: 1
+          FrequencyL: 1
+          IntensityR: 1
+          FrequencyR: 0
+          duration: 0
+        Delay: 1
+      - ManualID:
+          IntensityL: 1
+          FrequencyL: 0.1
+          IntensityR: 1
+          FrequencyR: 1
+          duration: 0
+        Delay: 1
   givingFeedback: 0
 --- !u!4 &1492979427
 Transform:
