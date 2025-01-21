@@ -1195,6 +1195,9 @@ MonoBehaviour:
     ManualPattern:
       Pulses: []
   givingFeedback: 0
+  hoverpattern:
+    ManualPattern:
+      Pulses: []
 --- !u!1 &244625718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1985,6 +1988,9 @@ MonoBehaviour:
     ManualPattern:
       Pulses: []
   givingFeedback: 0
+  hoverpattern:
+    ManualPattern:
+      Pulses: []
 --- !u!1 &455226581
 GameObject:
   m_ObjectHideFlags: 0
@@ -2109,21 +2115,21 @@ MonoBehaviour:
           IntensityR: 1
           FrequencyR: 0.5
           duration: 0
-        Delay: 0.2
+        delay: 0
       - ManualID:
           IntensityL: 1
           FrequencyL: 0.5
           IntensityR: 1
           FrequencyR: 0.5
           duration: 0
-        Delay: 0.2
+        delay: 0
       - ManualID:
           IntensityL: 1
           FrequencyL: 0.5
           IntensityR: 1
           FrequencyR: 0.5
           duration: 0
-        Delay: 0.2
+        delay: 0
   givingFeedback: 0
   stopHapticPattern:
     ManualPattern:
@@ -2134,14 +2140,14 @@ MonoBehaviour:
           IntensityR: 1
           FrequencyR: 0.5
           duration: 0
-        Delay: 0.2
+        delay: 0
       - ManualID:
           IntensityL: 1
           FrequencyL: 0.5
           IntensityR: 1
           FrequencyR: 0.5
           duration: 0
-        Delay: 0
+        delay: 0
   changed: 0
 --- !u!1 &456005170
 GameObject:
@@ -2492,29 +2498,32 @@ MonoBehaviour:
           IntensityR: 1
           FrequencyR: 1
           duration: 0
-        Delay: 0.1
+        delay: 0
       - ManualID:
           IntensityL: 1
           FrequencyL: 1
           IntensityR: 1
           FrequencyR: 1
           duration: 0
-        Delay: 0.3
+        delay: 0
       - ManualID:
           IntensityL: 1
           FrequencyL: 1
           IntensityR: 1
           FrequencyR: 1
           duration: 0
-        Delay: 0.1
+        delay: 0
       - ManualID:
           IntensityL: 1
           FrequencyL: 1
           IntensityR: 1
           FrequencyR: 1
           duration: 0
-        Delay: 0.3
+        delay: 0
   givingFeedback: 0
+  hoverpattern:
+    ManualPattern:
+      Pulses: []
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3889,14 +3898,14 @@ MonoBehaviour:
           IntensityR: 1
           FrequencyR: 0
           duration: 0
-        Delay: 0.2
+        delay: 0
       - ManualID:
           IntensityL: 1
           FrequencyL: 0
           IntensityR: 1
           FrequencyR: 0
           duration: 0
-        Delay: 0
+        delay: 0
   givingFeedback: 0
   falseHapticPattern:
     ManualPattern:
@@ -3907,7 +3916,7 @@ MonoBehaviour:
           IntensityR: 1
           FrequencyR: 0
           duration: 0
-        Delay: 0
+        delay: 0
 --- !u!1 &1295583569
 GameObject:
   m_ObjectHideFlags: 0
@@ -4434,6 +4443,9 @@ MonoBehaviour:
     ManualPattern:
       Pulses: []
   givingFeedback: 0
+  hoverpattern:
+    ManualPattern:
+      Pulses: []
 --- !u!1 &1441758930
 GameObject:
   m_ObjectHideFlags: 0
@@ -4616,36 +4628,42 @@ MonoBehaviour:
           IntensityR: 1
           FrequencyR: 1
           duration: 0
-        Delay: 1
+        delay: 0
       - ManualID:
           IntensityL: 1
           FrequencyL: 1
           IntensityR: 1
           FrequencyR: 0
           duration: 0
-        Delay: 1
+        delay: 0
       - ManualID:
           IntensityL: 1
           FrequencyL: 0
           IntensityR: 1
           FrequencyR: 1
           duration: 0
-        Delay: 1
+        delay: 0
       - ManualID:
           IntensityL: 1
           FrequencyL: 1
           IntensityR: 1
           FrequencyR: 0
           duration: 0
-        Delay: 1
+        delay: 0
       - ManualID:
           IntensityL: 1
           FrequencyL: 0.1
           IntensityR: 1
           FrequencyR: 1
           duration: 0
-        Delay: 1
+        delay: 0
   givingFeedback: 0
+  clip:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &1492979427
 Transform:
   m_ObjectHideFlags: 0
@@ -5296,6 +5314,9 @@ MonoBehaviour:
     ManualPattern:
       Pulses: []
   givingFeedback: 0
+  hoverpattern:
+    ManualPattern:
+      Pulses: []
 --- !u!1 &1836316888
 GameObject:
   m_ObjectHideFlags: 0
@@ -5587,6 +5608,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1558432025}
   optionsMenu: {fileID: 1129106215}
+  thingsToTurnOn: []
 --- !u!4 &1964602099
 Transform:
   m_ObjectHideFlags: 0
