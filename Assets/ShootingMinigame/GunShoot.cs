@@ -3,35 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GunShoot : MonoBehaviour
+public class GunShoot : hapticsPlayerParent
 {
-   public float damage = 10f;
-   public float impactForce = 100f;
-   public float range = 1000f;
-   public float firingRate = 15f;
+    public float damage = 10f;
+    public float impactForce = 100f;
+    public float range = 1000f;
+    public float firingRate = 15f;
 
-   private float nextTimeToFire = 0f;
+    private float nextTimeToFire = 0f;
 
-    [SerializeField] private InputActionReference shootAction;
-    private bool shootActionPressed;
+    public controllerHandedness handedness;
+
+    [SerializeField] AnimationCurve curve;
+
+    [SerializeField] private InputActionReference lShootAction;
+    [SerializeField] private InputActionReference rShootAction;
+    private bool lShootActionPressed;
+    private bool rShootActionPressed;
 
 
 
     void Awake()
     {
-        shootAction.action.performed += i => shootActionPressed = true;
+        lShootAction.action.performed += i => lShootActionPressed = true;
+        rShootAction.action.performed += i => rShootActionPressed = true;
     }
 
 
 
     private void Update()
-   {
-        if (shootActionPressed)
+    {
+        if (lShootActionPressed)
         {
             //Debug.Log("gughguhgughughguh");
-            shootActionPressed = false;
+            lShootActionPressed = false;
             //nextTimeToFire = Time.time + 1f / firingRate;
-            Shoot();
+            if ((handedness == controllerHandedness.left || handedness == controllerHandedness.both))
+            {
+                Shoot();
+            }
+        }
+        if (rShootActionPressed)
+        {
+            //Debug.Log("gughguhgughughguh");
+            rShootActionPressed = false;
+            //nextTimeToFire = Time.time + 1f / firingRate;
+            if ((handedness == controllerHandedness.right || handedness == controllerHandedness.both))
+            {
+                Shoot();
+            }
         }
 
    }
@@ -51,7 +71,9 @@ public class GunShoot : MonoBehaviour
          if (target != null)
          {
             target.TakeDamage(damage);
+                playPattern(curve, hapticPattern, handedness);
          }
+
       }
       
    }

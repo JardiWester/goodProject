@@ -6,23 +6,40 @@ public class ManageButtons : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject optionsMenu;
+    public List<GameObject> thingsToTurnOn = new List<GameObject>();
 
 
-    void Update()
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Escape))
+    //    {
+    //        EnterPauseMenu();
+    //    }
+    //}
+
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        foreach (GameObject obj in thingsToTurnOn)
         {
-            EnterPauseMenu();
+            obj.SetActive(false);
         }
     }
-    
+
     public void EnterPauseMenu()
     {
         pauseMenu.SetActive(true);
+        foreach (GameObject obj in thingsToTurnOn)
+        {
+            obj.SetActive(false);
+        }
     }
     public void PlayGame()
     {
-        //pauseMenu.SetActive(false);
+        pauseMenu.SetActive(false);
+        foreach (GameObject obj in thingsToTurnOn)
+        {
+            obj.SetActive(true);
+        }
     }
 
     public void ToggleOptionsMenu()

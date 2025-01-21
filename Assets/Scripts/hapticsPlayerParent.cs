@@ -12,6 +12,12 @@ using System;
 
 //[RequireComponent(typeof(HapticClipPlayer))]
 
+public enum controllerHandedness
+{
+    left,
+    right,
+    both
+}
 
 
 [Serializable]
@@ -36,23 +42,23 @@ public class hapticPulse
 {
     //[SerializeField] private HapticClip Pattern;
     [SerializeField] private manualIFD ManualID;
-    [SerializeField] private float Delay;
+    public float delay;
 
     //public HapticClip pattern { get => Pattern; }
     public manualIFD manualID { get => ManualID; }
-    public float delay { get => Delay; }
 }
 [Serializable]
 public class manualIFD
 {
-    [SerializeField] private float IntensityL;
+    
+
+    [SerializeField] public float IntensityL;
     [SerializeField] private float FrequencyL;
     [Space(10)]
-    [SerializeField] private float IntensityR;
+    [SerializeField] public float IntensityR;
     [SerializeField] private float FrequencyR;
     [Space(15)]
     [SerializeField] public float duration;
-
     
 
     public float intensityL { get => IntensityL; }
@@ -69,17 +75,21 @@ public class hapticsPlayerParent : MonoBehaviour
     [SerializeField] protected hapticPattern hapticPattern;
     [SerializeField] protected bool givingFeedback;
 
+
+    private Coroutine playHaptics;
+    
+
     protected virtual void Start()
     {
-        var rController = HapticsUtility.Controller.Right;
-
-        HapticsUtility.SendHapticImpulse(1, 10, rController, 1);
-
         //UnityEngine.XR.InputDevices.GetDevicesWithRole(UnityEngine.XR.InputDeviceRole.RightHanded, device);
 
         //debug stuff:
         //OVRInput.SetControllerVibration(200, 1);
         //playPattern();
+        /*
+        var rController = HapticsUtility.Controller.Right;
+        HapticsUtility.SendHapticImpulse(1, 10, rController, 1);
+        */
     }
 
     void Update()
@@ -94,18 +104,52 @@ public class hapticsPlayerParent : MonoBehaviour
         }*/
     }
     
+    public void playPattern()
+    {
+        playPattern(hapticPattern, 1);
+    }
 
-    public void playPattern(hapticPattern playHapticPattern = null)
+    public void playPattern(controllerHandedness handedness, hapticPattern playHapticPattern = null, float intensityMultiplier = 1)
     {
         if (playHapticPattern == null)
         {
             playHapticPattern = hapticPattern;
         }
-        else
+
+
+
+        if (handedness == controllerHandedness.left)
         {
-            //Debug.Log("test");
+            foreach (hapticPulse pulse in playHapticPattern.manualPattern.pulses)
+            {
+                pulse.manualID.IntensityL = 1;
+                pulse.manualID.IntensityR = 0;
+            }
+
+        } else if (handedness == controllerHandedness.right)
+        {
+            foreach (hapticPulse pulse in playHapticPattern.manualPattern.pulses)
+            {
+                pulse.manualID.IntensityL = 0;
+                pulse.manualID.IntensityR = 1;
+            }
         }
-        playPattern(hapticPattern, 1);
+        else if (handedness == controllerHandedness.both)
+        {
+            foreach (hapticPulse pulse in playHapticPattern.manualPattern.pulses)
+            {
+                pulse.manualID.IntensityL = 1;
+                pulse.manualID.IntensityR = 1;
+            }
+        }
+
+        playPattern(playHapticPattern, intensityMultiplier);
+    }
+
+    public void playPattern(hapticPattern playHapticPattern)
+    {
+        //Debug.Log(playHapticPattern);
+        playPattern(playHapticPattern, 1);
     }
     public void playPattern(float intensityMultiplier)
     { 
@@ -114,24 +158,70 @@ public class hapticsPlayerParent : MonoBehaviour
 
     public void playPattern(hapticPattern playHapticPattern, float intensityMultiplier)
     {
+        /*
         if (Gamepad.current == null)
         {
-            //return;
+            return;
         }
+        */
 
-        StopAllCoroutines();
+        
         //StopCoroutine(playManualHaptics(null));
 
         //playPattern(playHapticPattern);
         //playPattern(intensityMultiplier);
 
+        if (playHaptics != null)
+        {
+            //Debug.Log("shitzooi");
 
+            StopCoroutine(playHaptics);
+        }
         
-        StartCoroutine(playManualHaptics(hapticPattern.manualPattern, intensityMultiplier));
+        playHaptics = StartCoroutine(playManualHaptics(playHapticPattern.manualPattern, intensityMultiplier));
     }
 
+    public void playPattern(AnimationCurve curve, hapticPattern playHapticPattern, controllerHandedness handedness = controllerHandedness.both, float intensityMultiplier = 1)
+    {
+        if (handedness == controllerHandedness.left)
+        {
+            foreach (hapticPulse pulse in playHapticPattern.manualPattern.pulses)
+            {
+                pulse.manualID.IntensityL = 1;
+                pulse.manualID.IntensityR = 0;
+            }
 
-    IEnumerator playManualHaptics(manualHapticPattern pattern, float intensityMultiplier = 1f)
+        }
+        else if (handedness == controllerHandedness.right)
+        {
+            foreach (hapticPulse pulse in playHapticPattern.manualPattern.pulses)
+            {
+                pulse.manualID.IntensityL = 0;
+                pulse.manualID.IntensityR = 1;
+            }
+        }
+        else if (handedness == controllerHandedness.both)
+        {
+            foreach (hapticPulse pulse in playHapticPattern.manualPattern.pulses)
+            {
+                pulse.manualID.IntensityL = 1;
+                pulse.manualID.IntensityR = 1;
+            }
+        }
+
+        if (playHaptics != null)
+        {
+            //Debug.Log("kakazooi");
+
+            StopCoroutine(playHaptics);
+        }
+
+
+
+        StartCoroutine(playManualHaptics(playHapticPattern.manualPattern, curve, intensityMultiplier));
+    }
+
+    protected virtual IEnumerator playManualHaptics(manualHapticPattern pattern, float intensityMultiplier = 1f)
     {
         
 
@@ -165,7 +255,6 @@ public class hapticsPlayerParent : MonoBehaviour
 
             //Gamepad.current.SetMotorSpeeds(pulse.manualID.intensityL * intensityMultiplier, pulse.manualID.intensityR * intensityMultiplier);
 
-            //Debug.Log("guuuuuuuuuh");
 
             //OVRInput.SetControllerVibration(pulse.manualID.frequencyL, pulse.manualID.intensityL, OVRInput.Controller.LTouch);
             //OVRInput.SetControllerVibration(pulse.manualID.frequencyR, pulse.manualID.intensityR, OVRInput.Controller.RTouch);
@@ -186,6 +275,57 @@ public class hapticsPlayerParent : MonoBehaviour
         //playPattern();
         //playPattern(pattern);
         //playPattern(hapticPattern, 1f);
+    }
+
+    protected IEnumerator playManualHaptics(manualHapticPattern pattern, AnimationCurve animationClip, float intensityMultiplier = 1f)
+    {
+        manualHapticPattern patternFix = pattern;
+        givingFeedback = true;
+        foreach (hapticPulse pulse in patternFix.pulses)
+        {
+            var rController = HapticsUtility.Controller.Right;
+            var LController = HapticsUtility.Controller.Left;
+            float time = 0;
+
+
+
+            float durationFix = pulse.manualID.duration;
+            float delayFix = pulse.delay;
+
+
+            //Debug.Log(pulse.manualID.duration);
+
+            while (time < durationFix)
+            {
+
+                float intensityL = pulse.manualID.intensityL * animationClip.Evaluate(time / durationFix);
+                float intensityR = pulse.manualID.intensityR * animationClip.Evaluate(time / durationFix);
+
+                //Debug.Log(time / pulse.manualID.duration + " " + time / pulse.manualID.duration);
+                //Debug.Log(time + " " + pulse.manualID.duration);
+
+                
+
+                intensityL = Mathf.Clamp(intensityL, 0, 1);
+                intensityR = Mathf.Clamp(intensityR, 0, 1);
+
+                //Debug.Log(intensityR * intensityMultiplier);
+                //Debug.Log(intensityR);
+
+                //Debug.Log(time + " " + pulse.manualID.duration);
+                //Debug.Log(intensityL + " " + intensityR); 
+                HapticsUtility.SendHapticImpulse(intensityR * intensityMultiplier, 0, rController, pulse.manualID.frequencyR);
+                HapticsUtility.SendHapticImpulse(intensityL * intensityMultiplier, 0, LController, pulse.manualID.frequencyL);
+
+                time += Time.deltaTime;
+                yield return null;
+            }
+            //Debug.Log(patternFix.pulses[0].manualID.duration);
+            //Debug.Log("shitzooi   " + time + " " + pulse.manualID.duration);
+            //Debug.Log(delayFix);
+            yield return new WaitForSeconds(delayFix);
+        }
+        givingFeedback = false;
     }
 
 

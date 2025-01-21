@@ -12,7 +12,7 @@ public class hapticSlider : hapticsPlayerParent
 
     public void valueChanged(Single newValue)
     {
-        playPattern(null, newValue);
+        playPattern(newValue);
         changed = true;
     }
 
