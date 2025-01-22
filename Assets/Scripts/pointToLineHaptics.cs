@@ -111,9 +111,9 @@ public class pointToLineHaptics : hapticsPlayerParent
                     normalizedTime = 0;
                 }*/
 
-                if (normalizedTime > 1)
+                if (normalizedTime > 5)
                 {
-                    normalizedTime = 1;
+                    normalizedTime = 5;
                 }
                 if (normalizedTime < 0)
                 {
@@ -140,14 +140,9 @@ public class pointToLineHaptics : hapticsPlayerParent
 
                 if (!givingFeedback)
                 {
-                    //Debug.Log(normalizedTime);
+                    Debug.Log(normalizedTime);
 
                     playPattern(confirmCurve, confirmPatern, handedness);
-
-
-                    
-                    
-
 
                 }
                 //if (!givingSound)
@@ -157,17 +152,12 @@ public class pointToLineHaptics : hapticsPlayerParent
 
                 onTarget = true;
 
-
-
-
                 /*
                 StopAllCoroutines();
                 //StopCoroutine(playManualHaptics(null));
 
                 //playPattern(playHapticPattern);
                 //playPattern(intensityMultiplier);
-
-
 
                 StartCoroutine(playManualHaptics(confirmPatern.manualPattern, 1));
                 */
