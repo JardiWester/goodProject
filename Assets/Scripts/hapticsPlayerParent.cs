@@ -116,30 +116,28 @@ public class hapticsPlayerParent : MonoBehaviour
             playHapticPattern = hapticPattern;
         }
 
-
-
         if (handedness == controllerHandedness.left)
         {
             foreach (hapticPulse pulse in playHapticPattern.manualPattern.pulses)
             {
-                pulse.manualID.IntensityL = 1;
-                pulse.manualID.IntensityR = 0;
+                pulse.manualID.IntensityL *= 1;
+                pulse.manualID.IntensityR *= 0;
             }
 
         } else if (handedness == controllerHandedness.right)
         {
             foreach (hapticPulse pulse in playHapticPattern.manualPattern.pulses)
             {
-                pulse.manualID.IntensityL = 0;
-                pulse.manualID.IntensityR = 1;
+                pulse.manualID.IntensityL *= 0;
+                pulse.manualID.IntensityR *= 1;
             }
         }
         else if (handedness == controllerHandedness.both)
         {
             foreach (hapticPulse pulse in playHapticPattern.manualPattern.pulses)
             {
-                pulse.manualID.IntensityL = 1;
-                pulse.manualID.IntensityR = 1;
+                pulse.manualID.IntensityL *= 1;
+                pulse.manualID.IntensityR *= 1;
             }
         }
 
@@ -158,23 +156,8 @@ public class hapticsPlayerParent : MonoBehaviour
 
     public void playPattern(hapticPattern playHapticPattern, float intensityMultiplier)
     {
-        /*
-        if (Gamepad.current == null)
-        {
-            return;
-        }
-        */
-
-        
-        //StopCoroutine(playManualHaptics(null));
-
-        //playPattern(playHapticPattern);
-        //playPattern(intensityMultiplier);
-
         if (playHaptics != null)
         {
-            //Debug.Log("shitzooi");
-
             StopCoroutine(playHaptics);
         }
         
@@ -211,24 +194,19 @@ public class hapticsPlayerParent : MonoBehaviour
 
         if (playHaptics != null)
         {
-            //Debug.Log("kakazooi");
-
             StopCoroutine(playHaptics);
         }
-
-
 
         StartCoroutine(playManualHaptics(playHapticPattern.manualPattern, curve, intensityMultiplier));
     }
 
-    protected virtual IEnumerator playManualHaptics(manualHapticPattern pattern, float intensityMultiplier = 1f)
+    IEnumerator playManualHaptics(manualHapticPattern pattern, float intensityMultiplier = 1f)
     {
-        
-
-        
         givingFeedback = true;
         foreach (hapticPulse pulse in pattern.pulses)
         {
+
+            //what i found online that ended up working:
             /*foreach (var device in devices)
             {
                 UnityEngine.XR.HapticCapabilities capabilities;
@@ -244,22 +222,24 @@ public class hapticsPlayerParent : MonoBehaviour
                 }
             }*/
 
+
+            //what i made from that, this only works for left or right controllers, but this is better for this usecase 
+            var LController = HapticsUtility.Controller.Left;
             var rController = HapticsUtility.Controller.Right;
 
+            HapticsUtility.SendHapticImpulse(pulse.manualID.intensityL * intensityMultiplier, pulse.manualID.duration, LController, pulse.manualID.frequencyL);
             HapticsUtility.SendHapticImpulse(pulse.manualID.intensityR * intensityMultiplier, pulse.manualID.duration, rController, pulse.manualID.frequencyR);
 
-            var LController = HapticsUtility.Controller.Left;
-
-            HapticsUtility.SendHapticImpulse(pulse.manualID.intensityL * intensityMultiplier, pulse.manualID.duration, LController, pulse.manualID.frequencyL);
-
-
+            //for testing with a normal controller
             //Gamepad.current.SetMotorSpeeds(pulse.manualID.intensityL * intensityMultiplier, pulse.manualID.intensityR * intensityMultiplier);
 
-
+            //failed attempt at using the oculus system
             //OVRInput.SetControllerVibration(pulse.manualID.frequencyL, pulse.manualID.intensityL, OVRInput.Controller.LTouch);
             //OVRInput.SetControllerVibration(pulse.manualID.frequencyR, pulse.manualID.intensityR, OVRInput.Controller.RTouch);
 
             yield return new WaitForSeconds(pulse.manualID.duration);
+
+            //you needed to set the motors to 0 again with the other systems, i prefered this over the pulse where you set teh duration, but oh well
             //Gamepad.current.SetMotorSpeeds(0, 0);
 
             //OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.LTouch);
@@ -269,15 +249,13 @@ public class hapticsPlayerParent : MonoBehaviour
         }
         givingFeedback = false;
 
-
-
-        //debug stuff:
+        //debug stuff to make it loop:
         //playPattern();
         //playPattern(pattern);
         //playPattern(hapticPattern, 1f);
     }
 
-    protected IEnumerator playManualHaptics(manualHapticPattern pattern, AnimationCurve animationClip, float intensityMultiplier = 1f)
+    IEnumerator playManualHaptics(manualHapticPattern pattern, AnimationCurve animationClip, float intensityMultiplier = 1f)
     {
         manualHapticPattern patternFix = pattern;
         givingFeedback = true;
@@ -286,8 +264,6 @@ public class hapticsPlayerParent : MonoBehaviour
             var rController = HapticsUtility.Controller.Right;
             var LController = HapticsUtility.Controller.Left;
             float time = 0;
-
-
 
             float durationFix = pulse.manualID.duration;
             float delayFix = pulse.delay;
@@ -303,8 +279,6 @@ public class hapticsPlayerParent : MonoBehaviour
 
                 //Debug.Log(time / pulse.manualID.duration + " " + time / pulse.manualID.duration);
                 //Debug.Log(time + " " + pulse.manualID.duration);
-
-                
 
                 intensityL = Mathf.Clamp(intensityL, 0, 1);
                 intensityR = Mathf.Clamp(intensityR, 0, 1);
@@ -327,20 +301,4 @@ public class hapticsPlayerParent : MonoBehaviour
         }
         givingFeedback = false;
     }
-
-
-    void OnApplicationQuit()
-    {
-        //Debug.Log("jeej");
-        StopAllCoroutines();
-        if (Gamepad.current != null)
-        {
-            Gamepad.current.SetMotorSpeeds(0, 0);
-        }
-
-        //OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.LTouch);
-        //OVRInput.SetControllerVibration(0, 0, OVRInput.Controller.RTouch);
-    }
-
-
 }

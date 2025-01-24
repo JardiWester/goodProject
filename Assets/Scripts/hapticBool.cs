@@ -6,7 +6,6 @@ public class hapticBool : hapticsPlayerParent
 {
     [SerializeField] protected hapticPattern falseHapticPattern;
 
-
     public void boolChanged(bool newValue)
     {
         if (newValue)

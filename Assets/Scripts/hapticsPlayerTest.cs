@@ -5,27 +5,27 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs.Haptics;
 
 public class hapticsPlayerTest : hapticsPlayerParent
 {
-
-    [SerializeField] AnimationCurve clip;
-
-    // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        //playPattern();
-        StartCoroutine(playManualHaptics(hapticPattern.manualPattern, clip, 1));
+        playPattern();
     }
 
     private void Update()
     {
         if (!givingFeedback)
         {
-            StartCoroutine(playManualHaptics(hapticPattern.manualPattern, clip, 1));
+            playPattern();
         }
     }
 
 
-    protected IEnumerator playManualHaptics(manualHapticPattern pattern, AnimationCurve animationClip, float intensityMultiplier = 1f)
+    //[SerializeField] AnimationCurve clip;
+
+    //StartCoroutine(playManualHaptics(hapticPattern.manualPattern, clip, 1));
+    //StartCoroutine(playManualHaptics(hapticPattern.manualPattern, clip, 1));
+
+    /*protected IEnumerator playManualHaptics(manualHapticPattern pattern, AnimationCurve animationClip, float intensityMultiplier = 1f)
     {
         givingFeedback = true;
         foreach (hapticPulse pulse in pattern.pulses)
@@ -54,5 +54,5 @@ public class hapticsPlayerTest : hapticsPlayerParent
             yield return new WaitForSeconds(pulse.delay);
         }
         givingFeedback = false;
-    }
+    }*/
 }

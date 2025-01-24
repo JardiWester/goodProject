@@ -5,10 +5,15 @@ using UnityEngine;
 
 public class hapticSlider : hapticsPlayerParent
 {
-    [SerializeField] protected hapticPattern stopHapticPattern;
+    [SerializeField] hapticPattern stopHapticPattern;
+    [SerializeField] hapticPattern hoverpattern;
 
     [SerializeField] private bool changed = false;
 
+    public void hover()
+    {
+        playPattern(hoverpattern);
+    }
 
     public void valueChanged(Single newValue)
     {

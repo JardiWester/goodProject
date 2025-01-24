@@ -14,5 +14,4 @@ public class hapticButton : hapticsPlayerParent
     {
         playPattern(hoverpattern);
     }
-
 }
